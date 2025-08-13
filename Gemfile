@@ -45,6 +45,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # RuboCop extensions loaded via .rubocop.yml
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
 end
 
 group :development do
@@ -63,5 +67,3 @@ end
 
 gem "simple_form", "~> 5.3.1"
 gem "nokogiri", "~> 1.18.3"
-gem 'rubocop-performance', require: false
-gem 'rubocop-rails', require: false
