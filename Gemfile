@@ -5,7 +5,7 @@ gem "rails", "~> 8.0.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", ">= 1.3.0"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 6.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
@@ -41,7 +41,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', '~> 7.1.0'
+  gem "brakeman", "~> 7.1.0", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
@@ -56,7 +56,7 @@ group :development do
   gem "web-console"
 
   # Highlight the fine-grained location where an error occurred [https://github.com/ruby/error_highlight]
-  gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]
+  gem "error_highlight", ">= 0.5.1", platforms: [ :ruby ]
 end
 
 group :test do
@@ -67,3 +67,4 @@ end
 
 gem "simple_form", "~> 5.3.1"
 gem "nokogiri", "~> 1.18.3"
+gem 'rdoc'

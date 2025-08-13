@@ -88,7 +88,7 @@ jobs:
       - name: Run linters
         run: |
           bundle config set --local without "development"
-          bundle exec rubocop -f json
+          bundle exec rubocop -f json --parallel
 
   test:
     runs-on: ubuntu-latest
