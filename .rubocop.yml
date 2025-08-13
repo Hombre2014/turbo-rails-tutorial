@@ -1,6 +1,10 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
+require:
+  - rubocop-performance
+  - rubocop-rails
+
 # Overwrite or add rules to create your own house style
 #
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
@@ -11,3 +15,4 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
   Exclude:
     - '.github/workflows/**/*'
+    
