@@ -8,10 +8,13 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
+      # Clean up old gems (vendor/bundle) before installing
+      - name: Clean up vendor/bundle
+        run: rm -rf vendor/bundle
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -21,24 +24,15 @@ jobs:
           bundler: "2.6.3"
 
       - name: Update RubyGems
-        run: |
-          gem update --system 3.3.22
-          bundle install
+        run: gem update --system 3.3.22
 
       - name: Update platforms
         run: |
           bundle lock --add-platform x86_64-linux
           bundle lock --add-platform ruby
-          bundle install
-
-      - name: Install gems
-        run: |
-          bundle config set --local without "development"
-          bundle install
 
       - name: Update bundler
         run: |
-          gem update --system
           gem install bundler
           bundle config set --local frozen false
           bundle update --bundler
@@ -49,13 +43,21 @@ jobs:
           chmod +x bin/*
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager --ignore-config config/brakeman.ignore
+        run: |
+          if [ -f config/brakeman.ignore ]; then
+            bundle exec brakeman --no-pager --ignore-config config/brakeman.ignore
+          else
+            bundle exec brakeman --no-pager
+          fi
 
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
+      - name: Clean up vendor/bundle
+        run: rm -rf vendor/bundle
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -65,19 +67,15 @@ jobs:
           bundler: "2.6.3"
 
       - name: Update RubyGems
-        run: |
-          gem update --system 3.3.22
-          bundle install
+        run: gem update --system 3.3.22
 
       - name: Update platforms
         run: |
           bundle lock --add-platform x86_64-linux
           bundle lock --add-platform ruby
-          bundle install
 
       - name: Update bundler
         run: |
-          gem update --system
           gem install bundler
           bundle config set --local frozen false
           bundle update --bundler
@@ -90,8 +88,7 @@ jobs:
       - name: Run linters
         run: |
           bundle config set --local without "development"
-          bundle install
-          bin/rubocop -f json
+          bundle exec rubocop -f json --parallel
 
   test:
     runs-on: ubuntu-latest
@@ -115,6 +112,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Clean up vendor/bundle
+        run: rm -rf vendor/bundle
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -123,24 +123,15 @@ jobs:
           bundler: "2.6.3"
 
       - name: Update RubyGems
-        run: |
-          gem update --system 3.3.22
-          bundle install
+        run: gem update --system 3.3.22
 
       - name: Update platforms
         run: |
           bundle lock --add-platform x86_64-linux
           bundle lock --add-platform ruby
-          bundle install
-
-      - name: Install gems
-        run: |
-          bundle config set --local without "development"
-          bundle install
 
       - name: Update bundler
         run: |
-          gem update --system
           gem install bundler
           bundle config set --local frozen false
           bundle update --bundler
