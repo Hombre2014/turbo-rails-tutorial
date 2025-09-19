@@ -66,5 +66,5 @@ group :test do
 end
 
 gem "simple_form", "~> 5.3.1"
-gem "nokogiri", "~> 1.18.9"
+gem "nokogiri", "~> 1.18.10"
 gem 'rdoc'
