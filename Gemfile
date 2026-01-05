@@ -65,6 +65,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "simple_form", "~> 5.4.0"
+gem "simple_form", "~> 5.4.1"
 gem "nokogiri", "~> 1.19.0"
 gem 'rdoc'
